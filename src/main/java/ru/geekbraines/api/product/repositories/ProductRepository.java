@@ -15,6 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     Optional<Product> findByTitle(String title);
 
+
     @Query("select c from Product c where c.cost=(select max(c2.cost) from Product c2)")
     Optional<Product> findMostExpensive();
 

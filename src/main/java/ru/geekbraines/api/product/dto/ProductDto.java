@@ -23,6 +23,7 @@ public class ProductDto {
 
     }
 
+
     public ProductDto(Product product){
         this.Id = product.getId();
         this.title = product.getTitle();
