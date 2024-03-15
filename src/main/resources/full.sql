@@ -10,6 +10,7 @@ CREATE TABLE products(
     PRIMARY KEY(id)
     );
 
+
 INSERT INTO products (title, cost, mark, secretkey) VALUES
 ('milk',80,5,'dddd'),
 ('bread', 100, 4, 'dffg7765ds'),

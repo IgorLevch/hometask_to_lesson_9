@@ -35,6 +35,7 @@ angular.module('app', []).controller('indexController', function($scope,$http){
     }
 
 
+
      $scope.findProduct = function(productId){
         $http.get(contextPath+productId)
             .then(function (response){
