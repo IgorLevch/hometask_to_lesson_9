@@ -1,37 +1,25 @@
 package ru.geekbraines.api.product.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.geekbraines.api.product.data.Product;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
 
+
+    // @AllArgsConstructor -- это конструктор со всеми объектами, чтобы можно было собирать сразу объект
 
     private Long Id;
 
     private String title;
 
-    private Long cost;
-
-    private Integer mark;
+    private Integer cost;
 
 
-    public ProductDto() {
+    public ProductDto(Product s) {
     }
-
-    public ProductDto(Long l, String ggh, Long l1, Integer i) {
-
-    }
-
-
-    public ProductDto(Product product){
-        this.Id = product.getId();
-        this.title = product.getTitle();
-        this.cost = product.getCost();
-        this.mark = product.getMark();
-    }
-
-
-
-
 }

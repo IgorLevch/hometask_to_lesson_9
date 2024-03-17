@@ -5,18 +5,18 @@ import ru.geekbraines.api.product.data.Product;
 
 public class ProductsSpecifications {
 
-        public static Specification<Product> markGreaterOrEqualThan (Integer mark) {
+        public static Specification<Product> costGreaterOrEqualThan (Integer cost) {
 
             return(Specification<Product>)(root, criteriaQuery, criteriaBuilder) ->
-                    criteriaBuilder.greaterThanOrEqualTo(root.get("mark"),mark);
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("cost"), cost);
         }
 
 
 
-        public static Specification<Product> markLessOrEqualThan (Integer mark){
+        public static Specification<Product> costLessOrEqualThan (Integer cost){
 
             return (Specification<Product>) (root,criteriaQuery, criteriaBuilder)  ->
-                    criteriaBuilder.lessThanOrEqualTo(root.get("mark"), mark);
+                    criteriaBuilder.lessThanOrEqualTo(root.get("cost"), cost);
         }
 
 
