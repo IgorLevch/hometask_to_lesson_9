@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.geekbraines.api.product.data.Product;
 import ru.geekbraines.api.product.dto.ProductDto;
+import ru.geekbraines.api.product.exceptions.ResourceNotFoundException;
 import ru.geekbraines.api.product.repositories.ProductsRepository;
 import ru.geekbraines.api.product.repositories.specifications.ProductsSpecifications;
 
@@ -47,7 +48,8 @@ public class ProductsService {
             spec = spec.and(ProductsSpecifications.titleLike(titlePart));
         }
 
-        return productsRepository.findAll(spec, PageRequest.of(-1,5));
+        return productsRepository.findAll(spec, PageRequest.of(1,50)); // исправил с -1, как было у препа,
+        // потому что в логах шла ошибка, что IllegalArgumentException :  страница не может быть -1
 
     }
         public Optional<Product> findById(Long Id){return productsRepository.findById(Id);}
@@ -67,7 +69,7 @@ public class ProductsService {
     // находится в контексте постоянства и автоматом сохранится, как только мы выйдем из данного метода
     public Product  update(ProductDto productDto){
         Product product = productsRepository.findById(productDto.getId()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND));
+                new ResourceNotFoundException("невозможно обновить продукт, не найден в базе id: "+productDto.getId()));
                 product.setCost(productDto.getCost());
                 product.setTitle(productDto.getTitle());
         return  product;   // айдишник ни в коем случае не меняем

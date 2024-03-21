@@ -8,7 +8,9 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.geekbraines.api.product.converters.ProductConverter;
 import ru.geekbraines.api.product.data.Product;
 import ru.geekbraines.api.product.dto.ProductDto;
+import ru.geekbraines.api.product.exceptions.ResourceNotFoundException;
 import ru.geekbraines.api.product.service.ProductsService;
+import ru.geekbraines.api.product.validators.ProductValidator;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -17,6 +19,7 @@ public class ProductsController {
 
     private final ProductsService productsService;
     private final ProductConverter productConverter;
+    private final ProductValidator productValidator;
 
  /*   @Autowired
     public ProductsController(ProductsService productsService) {
@@ -25,7 +28,8 @@ public class ProductsController {
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable Long Id){
-        Product p = productsService.findById(Id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Product p = productsService.findById(Id).orElseThrow(()->
+                new ResourceNotFoundException("Product not found,id: "+Id));//ResponseStatusException(HttpStatus.NOT_FOUND)); -- как было с общим , не очень красивым исключением
         return productConverter.entityToDto(p);
     }
 
@@ -69,6 +73,7 @@ public class ProductsController {
         @PostMapping
         public ProductDto saveNewProduct(@RequestBody ProductDto productDto){
 
+        productValidator.validate(productDto);
         Product product = productConverter.dtoToEntity(productDto); // пришла ДТО-шка, преобразовали ее в сущность
         product = productsService.save(product); // поработали с сущностью (сохранили ее)
 
@@ -79,6 +84,7 @@ public class ProductsController {
         @PutMapping
         public ProductDto updateProduct(@RequestBody ProductDto productDto){
 
+        productValidator.validate(productDto);
         Product product = productsService.update(productDto);
         return productConverter.entityToDto(product);
 
