@@ -23,79 +23,74 @@
 </head>
 
 <body>
+ <!--  Это форма поиска-->
 
 <div class="container" ng-controller="indexController">
 
-
-
-
     <form novalidate ng-submit="loadProducts()">
-        <div class ="form-group row">
-            <div class ="form-floating input-group-sn">
-                <input type = "text" class="form-control" id="filterName" placeholder="" ng-model="filter.title_part">
-                <label for="filterName">Product Title</label>
+       <!-- <div class ="form-group row">-->
+            <div class ="form-floating input-group-sm">
+                <input type = "text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
+                <label for="filterTitle">Product Title</label>
             </div>
             <p></p>
 
-            <div class ="form-floating input-group-sn">
-                <input  type="number" class="form-control" id="filterMinLevel" placeholder="" ng-model="filter.min_mark" >
-                <label for="filterMinLevel">Minimal Mark</label>
+            <div class ="form-floating input-group-sm">
+                <input  type="number" class="form-control" id="filterMinCost" placeholder="" ng-model="filter.min_cost" >
+                <label for="filterMinCost">Minimal Cost</label>
             </div>
             <p></p>
 
 
-            <div class ="form-floating input-group-sn">
-                <input type="number"  class="form-control" id="filterMaxLevel" placeholder="" ng-model="filter.max_mark" >
-                <label for="filterMaxLevel">Maximal Mark</label>
+            <div class ="form-floating input-group-sm">
+                <input type="number"  class="form-control" id="filterMaxCost" placeholder="" ng-model="filter.max_cost" >
+                <label for="filterMaxCost">Maximal Cost</label>
             </div>
             <p></p>
 
-            <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type ="submit">Apply</button>
-        </div>
-    </form>
+            <button class="btn btn-outline-warning btn-sm" style="width: 50%;" type ="submit">Apply</button>
+        </form>
 
 
 
 
-
-
-
-    <h3>List of Products</h3>     <!--заголовок 3го уровня-->
+    <h3>Products' catalogue</h3>     <!--заголовок 3го уровня-->
     <!--    это просто пример scope:-->
+
+   <!-- это основная табличка-->
 
     <table class="table table-hover">    <!--идет табличка -->
         <tr>
             <td>ID</td>
-            <td>title</td>
-            <td>cost</td>
-            <td>mark</td>
-            <td>Action</td>
-        </tr>
+            <td>Title</td>
+            <td>Cost</td>
+          </tr>
         <tbody>      <!--началось тело таблицы-->
         <!--        ng-repeat  - это цикл foreach в ангуляре-->
-        <tr ng-repeat="p in ProductList">    <!-- tr - это строка в таблице-->
+        <tr ng-repeat="p in ProductsPage.content">    <!-- tr - это строка в таблице-->   <!--к content обращаемся, чтобы получить список продуктов оттуда-->
             <td>{{p.id}}</td>    <!-- {{}}  - означает обращение к полю id объекта p; две фигурные скобки на это указывают-->
             <td>{{p.title}}</td>
             <td>{{p.cost}}</td>
 
-
+<!--
 
             <td>
                 <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Delete</button>
             </td>
-            <!--            добавили пустой столбец, чтобы производить в нем действие, а также кнопку Удалить, окрашенную в красный цвет-->
-            <!--            Двойные фигурные скобки - это ссылка на переменную в scope  ng-click  -- это аналог Листенера -->
+            &lt;!&ndash;            добавили пустой столбец, чтобы производить в нем действие, а также кнопку Удалить, окрашенную в красный цвет&ndash;&gt;
+            &lt;!&ndash;            Двойные фигурные скобки - это ссылка на переменную в scope  ng-click  &#45;&#45; это аналог Листенера &ndash;&gt;
             <td>
                 <button class="btn btn-danger" ng-click="findProduct(p.title)">FindProduct</button>
             </td>
             <td>
                 <button class="btn btn-danger" ng-click="findProductByTitle(text)">FindProductByTitle</button>
 
-            </td>
+            </td>-->
         </tr>
         </tbody>
     </table>
 
+<!--
     <p></p>
     <h3>Add a product via JSON</h3>
 
@@ -105,7 +100,7 @@
         <input type = "number" class="form-control" placeholder="Mark" ng-model="newProductJson.mark">
         <p></p>
         <button type ="submit" class="btn btn-primary">Keep Product's JSON</button>
-    </form>
+    </form>-->
 
 
 </div>

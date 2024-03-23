@@ -1,36 +1,30 @@
 package ru.geekbraines.api.product.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.geekbraines.api.product.data.Product;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
 
+
+    // @AllArgsConstructor -- это конструктор со всеми объектами, чтобы можно было собирать сразу объект
 
     private Long Id;
 
     private String title;
 
-    private Long cost;
-
-    private Integer mark;
+    private Integer cost;
 
 
-    public ProductDto() {
+    public ProductDto(Product s) {  // минус такого подхода: если сделать конструктор на Продакт в ПРодакт ДТо
+        // (собирающий сущность) , то у других сервисов возникнет вопрос: а что такое сущность (Продакт)? другие сервисы
+        // же не знают, что это такое -- и видят только Продакт Дто
+        //поэтому так лучще не делать : ДТО шка к сущности привязываться не может -- просто из-за того, что мы не можем ссылку
+               // на сущность отдавать во внешние сервисы
+
     }
-
-    public ProductDto(Long l, String ggh, Long l1, Integer i) {
-
-    }
-
-    public ProductDto(Product product){
-        this.Id = product.getId();
-        this.title = product.getTitle();
-        this.cost = product.getCost();
-        this.mark = product.getMark();
-    }
-
-
-
-
 }

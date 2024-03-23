@@ -1,17 +1,10 @@
 
-DROP TABLE IF EXISTS products;
+create table if not exists products (id bigserial primary key, title varchar(255), cost int);
 
-CREATE TABLE products(
-    id bigserial NOT NULL,
-    title varchar(100) NOT NULL,
-    cost bigserial NOT NULL,
-    mark bigserial NOT NULL,
-    secretKey varchar (100),
-    PRIMARY KEY(id)
-    );
 
-INSERT INTO products (title, cost, mark, secretkey) VALUES
-('milk',80,5,'dddd'),
-('bread', 100, 4, 'dffg7765ds'),
-('coffee', 55, 5, 'dffg7765ds'),
-('water', 99, 2, 'dffg7765ds');
+insert into products (title, cost)
+values
+('milk',80),
+('bread', 100),
+('coffee', 55),
+('water', 99);
