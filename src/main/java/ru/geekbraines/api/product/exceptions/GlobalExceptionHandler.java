@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     // случае ResourceNotFoundException). Мы перехватили это исключение и пакуем из него ResponseEntity
     public ResponseEntity<AppError> catchResourceNotFoundException(ResourceNotFoundException e){
         log.error(e.getMessage(),e); // это надо сделать, чтобы самим знать данную ошибку
+        //  класс ResponseEntity представляет собой настраиваемый Http-ответ.
 
         return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),e.getMessage()),HttpStatus.NOT_FOUND);
     }   // NOT_ExceptionHandler // аннотация указывает, что данный метод может перехватывать исключения какого-то вида (в нашем
