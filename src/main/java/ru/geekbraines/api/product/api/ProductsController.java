@@ -1,10 +1,17 @@
 package ru.geekbraines.api.product.api;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
 import ru.geekbraines.api.product.converters.ProductConverter;
 import ru.geekbraines.api.product.data.Product;
 import ru.geekbraines.api.product.dto.ProductDto;
@@ -20,77 +27,58 @@ public class ProductsController {
     private final ProductsService productsService;
     private final ProductConverter productConverter;
     private final ProductValidator productValidator;
-
- /*   @Autowired
-    public ProductsController(ProductsService productsService) {
-        this.productsService = productsService;
-    }*/
+    
+    
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable Long Id){
-        Product p = productsService.findById(Id).orElseThrow(()->
-                new ResourceNotFoundException("Product not found,id: "+Id));//ResponseStatusException(HttpStatus.NOT_FOUND)); -- как было с общим , не очень красивым исключением
-        return productConverter.entityToDto(p);
+
+        Product p = productsService.findById(Id).orElseThrow(() ->
+        new ResourceNotFoundException("Product not found,id: "+Id));
+
+        return productConverter.entityToDto(p); 
     }
 
-
-
-    @GetMapping
+    @GetMapping 
     public Page<ProductDto> getAllProducts(
-        @RequestParam(name = "p",defaultValue = "1") Integer page,
-        @RequestParam(name="min_cost", required = false) Integer minCost,
-        @RequestParam(name="max_cost", required = false) Integer maxCost,
-        @RequestParam(name="title_part", required = false) String titlePart
-    ) {
-
-        if (page<1){
+        @RequestParam(name="p",defaultValue = "1") Integer page,
+        @RequestParam(name="min_cost", required=false) Integer minCost,
+        @RequestParam(name="max_cost", required=false) Integer maxCost,
+        @RequestParam(name="title_part", required=false) String titlePart
+    )  {
+         if (page<1) {
             page=1;
-        }
+         }   
 
-        return productsService.findAll(minCost, maxCost, titlePart, page).map(
-
-                s -> productConverter.entityToDto(s)
-        );
+            return productsService.findAll(minCost, maxCost, titlePart, page).map(
+                
+            s ->  productConverter.entityToDto(s)
+            );
     }
 
-        /*@GetMapping("/by_title")
-        public Product findByTitle(@RequestParam String title){
-            return productsService.findByTitle(title).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long Id){
 
-        @GetMapping("/mostexpensive")
-        public Product findMostExp(){
-            return productsService.findMostExpensive().orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        }*/
+        productsService.deleteById(Id);
+    }
 
-
-        @DeleteMapping("/{id}")
-        public void delete(@PathVariable Long Id){
-
-            productsService.deleteById(Id);
-        }
-
-        @PostMapping
-        public ProductDto saveNewProduct(@RequestBody ProductDto productDto){
-
+    @PostMapping
+    public ProductDto saveNewProduct(@RequestBody ProductDto productDto){
+            
         productValidator.validate(productDto);
-        Product product = productConverter.dtoToEntity(productDto); // пришла ДТО-шка, преобразовали ее в сущность
-        product = productsService.save(product); // поработали с сущностью (сохранили ее)
+        Product product = productConverter.dtoToEntity(productDto);
+        product = productsService.save(product);
 
-        return productConverter.entityToDto(product);  // вернули обратно ДТОшку
-
-        }
-
+        return productConverter.entityToDto(product);
+    } 
         @PutMapping
         public ProductDto updateProduct(@RequestBody ProductDto productDto){
 
-        productValidator.validate(productDto);
-        Product product = productsService.update(productDto);
-        return productConverter.entityToDto(product);
+            productValidator.validate(productDto);
+            Product product = productsService.update(productDto);
+            return productConverter.entityToDto(product);
 
         }
-
-
 
 
 
