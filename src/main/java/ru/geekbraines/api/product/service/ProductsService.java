@@ -11,12 +11,15 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import ru.geekbraines.api.product.data.Product;
 import ru.geekbraines.api.product.dto.ProductDto;
+import ru.geekbraines.api.product.exceptions.ResourceNotFoundException;
 import ru.geekbraines.api.product.repositories.ProductsRepository;
 import ru.geekbraines.api.product.repositories.specifications.ProductsSpecifications;
 
 @Service
 @RequiredArgsConstructor
 public class ProductsService {
+
+    // сам по себе сервис обязан отдавать сущности, потому что это внутренняя логика 
 
     private final ProductsRepository productsRepository;
 

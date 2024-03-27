@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import ru.geekbraines.api.product.dto.ProductDto;
+import ru.geekbraines.api.product.exceptions.ValidationException;
 
 @Component
 public class ProductValidator {

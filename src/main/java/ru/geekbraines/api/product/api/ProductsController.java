@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import ru.geekbraines.api.product.converters.ProductConverter;
 import ru.geekbraines.api.product.data.Product;
 import ru.geekbraines.api.product.dto.ProductDto;
+import ru.geekbraines.api.product.exceptions.ResourceNotFoundException;
 import ru.geekbraines.api.product.service.ProductsService;
+import ru.geekbraines.api.product.validators.ProductValidator;
 
 @RestController
 @RequestMapping("/api/v1/products")
